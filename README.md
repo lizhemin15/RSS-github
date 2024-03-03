@@ -1,6 +1,6 @@
 ![](./statics/logo.jpg)
 
-# Obj: RSSNet!
+# Obj: RSSNet
 
 ## parameters
 ```

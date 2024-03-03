@@ -261,8 +261,8 @@ class rssnet(object):
                     self.net_p['net_name'] == "composition" and self.net_p['net_list'][0]['net_name'] in ['MLP', 'SIREN']):
                 x_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][0])
                 y_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][1])
-                plt.xticks(x_ticks)
-                plt.yticks(y_ticks)
+                plt.xticks(range(len(x_ticks)), x_ticks)
+                plt.yticks(range(len(y_ticks)), y_ticks)
 
         if self.save_p['save_if']:
             plt.savefig(self.save_p['save_path'], bbox_inches='tight', pad_inches=0)

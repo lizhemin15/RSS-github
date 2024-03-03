@@ -76,7 +76,7 @@ class rssnet(object):
         de_para_dict = {'data_path':None,'data_type':'syn','data_shape':(10,10),'down_sample':[1,1,1],
                         'mask_type':'random','random_rate':0.0,'mask_path':None,'mask_shape':'same','seeds':88,'down_sample_rate':2,
                         'noise_mode':None,'noise_parameter':0.0,
-                        'x_mode':'inr','batch_size':128,'shuffle_if':False,'xrange':1,'ymode':'completion','return_data_type':'tensor',
+                        'x_mode':'inr','batch_size':128,'shuffle_if':False,'xrange':1,'xcenter':0,'ymode':'completion','return_data_type':'tensor',
                         'pre_full':False,'out_dim_one':True}
         for key in de_para_dict.keys():
             param_now = self.data_p.get(key,de_para_dict.get(key))
@@ -91,7 +91,7 @@ class rssnet(object):
         self.data_noise = toolbox.add_noise(self.data,mode=self.data_p['noise_mode'],parameter=self.data_p['noise_parameter'],seeds=self.data_p['seeds'])
         self.data_train = toolbox.get_dataloader(x_mode=self.data_p['x_mode'],batch_size=self.data_p['batch_size'],
                                                  shuffle_if=self.data_p['shuffle_if'],
-                                                data=self.data,mask=self.mask,xrange=self.data_p['xrange'],noisy_data=self.data_noise,
+                                                data=self.data,mask=self.mask,xrange=self.data_p['xrange'],xcenter=self.data_p['xcenter'],noisy_data=self.data_noise,
                                                 ymode=self.data_p['ymode'],return_data_type=self.data_p['return_data_type'],
                                                 gpu_id=self.net_p['gpu_id'],out_dim_one=self.data_p['out_dim_one'])
         

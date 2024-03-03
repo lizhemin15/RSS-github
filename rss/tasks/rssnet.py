@@ -132,7 +132,7 @@ class rssnet(object):
             self.save_p[key] = param_now
 
     def init_show(self):
-        de_para_dict = {'show_type':'gray_img','show_content':'original'}
+        de_para_dict = {'show_type':'gray_img','show_content':'original','show_axis':False}
         for key in de_para_dict.keys():
             param_now = self.show_p.get(key,de_para_dict.get(key))
             self.show_p[key] = param_now
@@ -223,7 +223,7 @@ class rssnet(object):
 
 
     def show(self):
-        de_para_dict = {'show_type':'gray_img','show_content':'recovered','show_axis':False}
+        de_para_dict = {'show_type':'gray_img','show_content':'recovered'}
         for key in de_para_dict.keys():
             param_now = self.show_p.get(key,de_para_dict.get(key))
             self.show_p[key] = param_now

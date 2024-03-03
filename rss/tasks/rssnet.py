@@ -223,42 +223,48 @@ class rssnet(object):
 
 
     def show(self):
-        de_para_dict = {'show_type':'gray_img','show_content':'recovered'}
+        de_para_dict = {'show_type': 'gray_img', 'show_content': 'recovered'}
         for key in de_para_dict.keys():
-            param_now = self.show_p.get(key,de_para_dict.get(key))
+            param_now = self.show_p.get(key, de_para_dict.get(key))
             self.show_p[key] = param_now
+
         if self.show_p['show_content'] == 'recovered':
-            if self.net_p['net_name'] in ['UNet','ResNet','skip']:
+            if self.net_p['net_name'] in ['UNet', 'ResNet', 'skip']:
                 if self.data_p['return_data_type'] == 'random':
                     unn_index = 0
                 else:
                     unn_index = 1
-                pre_img = self.net(self.data_train['obs_tensor'][unn_index].reshape(1,-1,self.data_p['data_shape'][0],self.data_p['data_shape'][1]))
+                pre_img = self.net(
+                    self.data_train['obs_tensor'][unn_index].reshape(1, -1, self.data_p['data_shape'][0],
+                                                                    self.data_p['data_shape'][1]))
                 pre_img = pre_img.reshape(self.data_p['data_shape'])
             else:
                 pre_img = self.net(self.data_train['obs_tensor'][0])
             show_img = pre_img.reshape(self.data_p['data_shape']).detach().cpu().numpy()
-            #print('PSNR=',self.cal_psnr(show_img,self.data_train['obs_tensor'][1].reshape(self.data_p['data_shape']).detach().cpu().numpy()),'dB')
+            # print('PSNR=',self.cal_psnr(show_img,self.data_train['obs_tensor'][1].reshape(self.data_p['data_shape']).detach().cpu().numpy()),'dB')
         elif self.show_p['show_content'] == 'original':
             show_img = self.data_train['obs_tensor'][1].reshape(self.data_p['data_shape']).detach().cpu().numpy()
+
         if self.show_p['show_type'] == 'gray_img':
-            plt.imshow(show_img,'gray',vmin=0,vmax=1)
+            plt.imshow(show_img, 'gray', vmin=0, vmax=1)
         elif self.show_p['show_type'] == 'red_img':
             import seaborn as sns
             sns.set()
             plt.imshow(show_img)
         else:
-            raise('Wrong show_type in show_p:',self.show_p['show_type'])
-        if self.show_p['show_axis'] == False:
+            raise Exception('Wrong show_type in show_p:', self.show_p['show_type'])
+
+        if not self.show_p['show_axis']:
             plt.axis('off')
         else:
-            if self.net_p['net_name'] in ['MLP','SIREN'] or (self.net_p['net_name']=="composition" and self.net_p['net_list'][0]['net_name'] in ['MLP','SIREN']):
-                ax = plt.gca()
+            if self.net_p['net_name'] in ['MLP', 'SIREN'] or (
+                    self.net_p['net_name'] == "composition" and self.net_p['net_list'][0]['net_name'] in ['MLP', 'SIREN']):
                 x_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][0])
                 y_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][1])
-                ax.set_xticks(x_ticks)
-                ax.set_yticks(y_ticks)
-        if self.save_p['save_if'] == True:
+                plt.xticks(x_ticks)
+                plt.yticks(y_ticks)
+
+        if self.save_p['save_if']:
             plt.savefig(self.save_p['save_path'], bbox_inches='tight', pad_inches=0)
         plt.show()
         

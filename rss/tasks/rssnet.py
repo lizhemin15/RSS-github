@@ -251,6 +251,13 @@ class rssnet(object):
             raise('Wrong show_type in show_p:',self.show_p['show_type'])
         if self.show_p['show_axis'] == False:
             plt.axis('off')
+        else:
+            if self.net_p['net_name'] in ['MLP','SIREN'] or (self.net_p['net_name']=="composition" and self.net_p['net_list'][0]['net_name'] in ['MLP','SIREN']):
+                ax = plt.gca()
+                x_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][0])
+                y_ticks = np.linspace(-self.data_p['xrange'], self.data_p['xrange'], self.data_p['data_shape'][1])
+                ax.set_xticks(x_ticks)
+                ax.set_yticks(y_ticks)
         if self.save_p['save_if'] == True:
             plt.savefig(self.save_p['save_path'], bbox_inches='tight', pad_inches=0)
         plt.show()

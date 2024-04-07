@@ -8,13 +8,12 @@ abc_str = 'abcdefghijklmnopqrstuvwxyz'
 #TODO all the data are 1 dimension output, which is not suitable for general
 
 def get_dataloader(x_mode='inr',batch_size=128,shuffle_if=False,
-                   data=None,mask=None,xrange=1,xcenter=0,noisy_data=None,
-                   ymode='completion',return_data_type='loader',
-                   gpu_id=0,out_dim_one=True):
+                   data=None,mask=None,xrange=1,noisy_data=None,
+                   ymode='completion',return_data_type='loader',gpu_id=0,out_dim_one=True):
     # Given x_mode
     # Return a pytorch dataloader generator or generator list
     # Principle: process data on numpy untill the last step
-    cor_list,inrarr = get_cor(data.shape,xrange,xcenter)
+    cor_list,inrarr = get_cor(data.shape,xrange)
 
     def get_data_feature(data,mask=None,kernel_size=3):
         """
@@ -144,10 +143,10 @@ def add_space(oristr):
         addstr += ' '
     return addstr
 
-def get_cor(xshape,xrange,xcenter=0):  
+def get_cor(xshape,xrange):  
     cor_list = []
     for i,point_num in enumerate(xshape):
-        cor_list.append(np.linspace(-xrange+xcenter,xrange+xcenter,point_num))
+        cor_list.append(np.linspace(-xrange,xrange,point_num))
         # if i == 0:
         #     if len(xshape) == 1:
         #         cor_list.append(np.linspace(-xrange,xrange,point_num))

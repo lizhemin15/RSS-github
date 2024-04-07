@@ -1,6 +1,6 @@
 ![](./statics/logo.jpg)
 
-# Obj: RSSNet!
+# Obj: RSSNet
 
 ## parameters
 ```
@@ -18,7 +18,7 @@ save_parameters
 
 
 
-## Idea use way:
+## Idea use way:  
 ```python
 import rss
 # parameters_dict = {}
